@@ -1,0 +1,19 @@
+apiVersion: skaffold/v1beta13
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+    - image: sample-go
+      # context: .
+      custom:
+        buildCommand: ./build.sh
+        dependencies:
+          paths:
+            - .
+  local:
+    push: true
+deploy:
+  kubectl:
+    manifests:
+      - ./service.yaml
